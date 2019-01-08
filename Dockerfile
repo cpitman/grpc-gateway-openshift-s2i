@@ -6,6 +6,8 @@ LABEL io.k8s.description="Builder for creating grpc Rest to GRPC Gateways" \
       io.openshift.tags="builder,grpc" \
       io.openshift.s2i.scripts-url="image:///opt/s2i"
 
+USER root
+
 RUN yum install -y protobuf protobuf-devel protobuf-c-devel; yum clean all
 
 RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
@@ -13,3 +15,5 @@ RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
 
 COPY s2i /opt/s21
+
+USER 1001
