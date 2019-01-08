@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/devtools/go-toolset-1.10-rhel7:latest
+#FROM registry.access.redhat.com/devtools/go-toolset-1.10-rhel7:latest
+FROM centos/go-toolset-7-centos7:latest
 
 LABEL io.k8s.description="Builder for creating grpc Rest to GRPC Gateways" \
       io.k8s.display-name="GRPC Rest Gateway" \
