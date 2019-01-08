@@ -11,9 +11,9 @@ USER root
 
 RUN yum install -y protobuf protobuf-devel protobuf-c-devel; yum clean all
 
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
-RUN go get -u github.com/golang/protobuf/protoc-gen-go
+RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway"
+RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
+RUN scl enable go-toolset-7 "go get -u github.com/golang/protobuf/protoc-gen-go"
 
 COPY s2i /opt/s21
 
