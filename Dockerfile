@@ -15,6 +15,7 @@ RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/pr
 RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
 RUN scl enable go-toolset-7 "go get -u github.com/golang/protobuf/protoc-gen-go"
 
-COPY s2i /opt/s21
+COPY s2i /opt/s2i
+RUN chmod -R g+rwx /opt/s2i 
 
 USER 1001
