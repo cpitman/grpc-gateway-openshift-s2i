@@ -18,13 +18,14 @@ RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/pr
     chmod g+x /opt/protoc/bin/protoc && \
     rm protoc.zip
     
-ENV PATH=/opt/protoc/bin:${PATH}
+COPY s2i /opt/s2i
+RUN chmod -R g+rwx /opt/s2i 
+
+ENV PATH=/opt/protoc/bin:/opt/app-root/src/go/bin:${PATH}
+
+USER 1001
 
 RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway"
 RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
 RUN scl enable go-toolset-7 "go get -u github.com/golang/protobuf/protoc-gen-go"
 
-COPY s2i /opt/s2i
-RUN chmod -R g+rwx /opt/s2i 
-
-USER 1001
