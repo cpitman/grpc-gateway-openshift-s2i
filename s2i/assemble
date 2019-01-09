@@ -1,6 +1,9 @@
 #!/bin/bash
-#!/bin/bash
 
 mkdir generated
 
+#Generate Proxy
 protoc -I. -I/tmp/src -I/opt/app-root/src/go/src -I/opt/app-root/src/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --grpc-gateway_out=logtostderr=true:generated /tmp/src/*.proto
+
+#Generate Swagger
+protoc -I /tmp/src -I/opt/app-root/src/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --swagger_out=logtostderr=true:generated /tmp/src/*.proto
