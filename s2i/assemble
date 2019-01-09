@@ -1,9 +1,23 @@
 #!/bin/bash
 
-mkdir generated
+cd /tmp/src/servicepb
+
+cp /tmp/proto/src/*.proto service.proto
+
+sed -i 's/package .*;/package servicepb;/g' service.proto
+
+protoc -I. -I/opt/app-root/src/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --go_out=plugins=grpc:. service.proto
 
 #Generate Proxy
-protoc -I. -I/tmp/src -I/opt/app-root/src/go/src -I/opt/app-root/src/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --grpc-gateway_out=logtostderr=true:generated /tmp/src/*.proto
+protoc -I. -I/opt/app-root/src/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --grpc-gateway_out=logtostderr=true:. service.proto
 
 #Generate Swagger
-protoc -I /tmp/src -I/opt/app-root/src/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --swagger_out=logtostderr=true:generated /tmp/src/*.proto
+protoc -I. -I/opt/app-root/src/go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --swagger_out=logtostderr=true:. service.proto
+
+scl enable go-toolset-7 "go generate ."
+
+sed -i 's%$GOPATH/bin/*%$GOPATH/bin/grpc-gateway-example%' /usr/libexec/s2i/assemble
+
+cd -
+
+/usr/libexec/s2i/assemble
