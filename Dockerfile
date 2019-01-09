@@ -18,7 +18,7 @@ RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/pr
     chmod g+x /opt/protoc/bin/protoc && \
     rm protoc.zip
     
-ENV PATH=$PATH;/opt/protoc/bin
+ENV PATH=/opt/protoc/bin:${PATH}
 
 RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway"
 RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
