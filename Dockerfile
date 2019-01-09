@@ -9,7 +9,16 @@ LABEL io.k8s.description="Builder for creating grpc Rest to GRPC Gateways" \
 
 USER root
 
-RUN yum install -y protobuf protobuf-devel protobuf-c-devel; yum clean all
+RUN yum install -y unzip; yum clean all
+
+RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip -O protoc.zip && \
+    mkdir /opt/protoc && \
+    unzip -d /opt/protoc protoc.zip && \
+    chmod -R g+r /opt/protoc && \
+    chmod g+x /opt/protoc/bin/protoc && \
+    rm protoc.zip
+    
+ENV PATH=$PATH;/opt/protoc/bin
 
 RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway"
 RUN scl enable go-toolset-7 "go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger"
